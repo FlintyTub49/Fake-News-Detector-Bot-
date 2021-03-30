@@ -1,6 +1,16 @@
+import os
 from flask import Flask, request
 import requests
+
+from keras.models import load_model
 from twilio.twiml.messaging_response import MessagingResponse
+
+from preprocessing import preprocess_text
+
+codePath = os.path.dirname(os.path.abspath('preprocessing.py'))
+tokens = os.path.join(codePath, 'Models/90HighBias1D.h5')
+model = load_model(tokens)
+
 
 app = Flask(__name__)
 
@@ -29,5 +39,16 @@ def bot():
     return str(resp)
 
 
+# ---------------------------------
+# Mostly To Be Deleted
+# ---------------------------------
+def main():
+    x = input('Please Enter Some Text:')
+    x = preprocess_text(x)
+    pred = model.predict(x)
+    print(pred)
+
+
 if __name__ == '__main__':
-    app.run()
+    # app.run()
+    main()
