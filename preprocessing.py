@@ -1,3 +1,7 @@
+from keras.preprocessing import sequence
+import keras
+import pickle as pk
+from nltk.corpus import stopwords
 import numpy as np
 import string
 from bs4 import BeautifulSoup
@@ -6,11 +10,6 @@ import os
 
 import nltk
 nltk.download('stopwords')
-from nltk.corpus import stopwords
-
-import pickle as pk
-import keras
-from keras.preprocessing import sequence
 
 
 # ---------------------------------
@@ -33,15 +32,18 @@ def strip_html(text):
     soup = BeautifulSoup(text, "html.parser")
     return soup.get_text()
 
+
 # Removing the square brackets
 def remove_between_square_brackets(text):
     return re.sub('\[[^]]*\]', '', text)
 
+
 # Removing URL's
-def remove_between_square_brackets(text):
+def remove_URL(text):
     return re.sub(r'http\S+', '', text)
 
-#Removing the stopwords from text
+
+# Removing the stopwords from text
 def remove_stopwords(text):
     final_text = []
     for i in text.split():
@@ -49,15 +51,17 @@ def remove_stopwords(text):
             final_text.append(i.strip())
     return " ".join(final_text)
 
+
 # Removing Emojis From Text
 def remove_emojis(text):
-    emojis = re.compile(pattern = "["
-        u"\U0001F600-\U0001F64F"  # emoticons
-        u"\U0001F300-\U0001F5FF"  # symbols & pictographs
-        u"\U0001F680-\U0001F6FF"  # transport & map symbols
-        u"\U0001F1E0-\U0001F1FF"  # flags (iOS)
-                           "]+", flags = re.UNICODE)
+    emojis = re.compile(pattern="["
+                        u"\U0001F600-\U0001F64F"  # emoticons
+                        u"\U0001F300-\U0001F5FF"  # symbols & pictographs
+                        u"\U0001F680-\U0001F6FF"  # transport & map symbols
+                        u"\U0001F1E0-\U0001F1FF"  # flags (iOS)
+                        "]+", flags=re.UNICODE)
     return emojis.sub(r'', text)
+
 
 # Calling Function Which Class All Other Functions
 def denoise_text(text):
@@ -69,6 +73,9 @@ def denoise_text(text):
 
     # Remove Square Brackets
     text = remove_between_square_brackets(text)
+
+    # Remove URLs
+    text = remove_URL(text)
 
     # Remove Stopwords
     text = remove_stopwords(text)
@@ -87,7 +94,7 @@ def preprocess_text(text):
     # Specifying Max Length Of The Data
     maxlen = 300
     tokenized_user = tokenizer.texts_to_sequences([text])
-    user = sequence.pad_sequences(tokenized_user, maxlen = maxlen)
+    user = sequence.pad_sequences(tokenized_user, maxlen=maxlen)
 
     # Returning User A Cleaned Text
     return user

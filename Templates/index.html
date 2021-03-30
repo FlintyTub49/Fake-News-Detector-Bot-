@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Sentiment Analysis</title>
+</head>
+
+<body>
+
+    <br>
+    <center>
+        <h1 id="title">Sentiment Analysis of GameStop Tweets</h1>
+    </center>
+    <br>
+    <form name="image_form" action="/" method="POST" enctype="multipart/form-data">
+        <div style="text-align:center">
+
+            <div>
+                <textarea id="tweet" name="tweet" rows="4"></textarea>
+            </div>
+
+            <div>
+                <input id="predict" class="cust_button" name="button" type="submit" value="Predict" />
+            </div>
+
+            <div>
+                <span id="num" style="">{{pred}}</span>
+            </div>
+        </div>
+    </form>
+
+</body>
+
+</html>
+'''
