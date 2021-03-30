@@ -4,6 +4,8 @@ from bs4 import BeautifulSoup
 import re
 import os
 
+import nltk
+nltk.download('stopwords')
 from nltk.corpus import stopwords
 
 import pickle as pk
