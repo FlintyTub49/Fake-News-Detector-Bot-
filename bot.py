@@ -14,6 +14,10 @@ model = load_model(tokens)
 
 app = Flask(__name__)
 
+
+# -----------------------------------
+# Bot Command Reciever And Processor
+# -----------------------------------
 @app.route('/bot', methods=['POST'])
 def bot():
     incoming_msg = request.values.get('Body', '').lower()
