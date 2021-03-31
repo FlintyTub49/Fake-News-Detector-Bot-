@@ -2,6 +2,8 @@ from flask import Flask, request
 import telegram
 from credentials import bot_token, bot_user_name, URL
 from preprocessing import preprocess_text
+from keras.models import load_model
+import os
 
 global bot
 global TOKEN
