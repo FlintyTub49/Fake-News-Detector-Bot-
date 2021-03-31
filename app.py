@@ -12,9 +12,9 @@ from twilio.rest import Client
 
 # Your Account Sid and Auth Token from twilio.com/console
 # and set the environment variables. See http://twil.io/secure
-account_sid = os.environ['TWILIO_ACCOUNT_SID']
-auth_token = os.environ['TWILIO_AUTH_TOKEN']
-client = Client(account_sid, auth_token)
+# account_sid = os.environ['TWILIO_ACCOUNT_SID']
+# auth_token = os.environ['TWILIO_AUTH_TOKEN']
+# client = Client(account_sid, auth_token)
 
 codePath = os.path.dirname(os.path.abspath('preprocessing.py'))
 tokens = os.path.join(codePath, 'Models/90HighBias1D.h5')
@@ -54,6 +54,7 @@ def home():
     #     responded = True
 
 
+
 # -----------------------------------
 # Bot Command Reciever And Processor
 # -----------------------------------
@@ -73,8 +74,8 @@ def bot():
     if any(hello in incoming_msg for hello in hello_list) and hello_flag == 0:
         set_global_flag(value=1)
 
-        hello_message = """_Hi, 
-        I am *COVID19 Mythbuster*_ 👋🏻
+        hello_message = """_Hi,_ 
+        _I am *COVID19 Mythbuster*_ 👋🏻
 
         ◻️ _In these crazy hyperconnected times, there is a lot of FAKE NEWS spreading about the NOVEL CORONAVIRUS._
 
@@ -82,8 +83,8 @@ def bot():
 
         ◻️ _All you need to do is send me the news you get to verify if it Real or not._ 
 
-        _It's that simple 😃
-        Try it for yourself, simply send me a News About COVID19 and I'll try to tell if it is Fake Or Real_ ✌🏻✅
+        _It's that simple_ 😃
+        _Try it for yourself, simply send me a News About COVID19 and I'll try to tell if it is Fake Or Real_ ✌🏻✅
         """
 
         msg.body(hello_message)
@@ -110,23 +111,6 @@ def bot():
             Hello to get started if you haven't already""")
 
     return str(resp)
-
-
-# -----------------------------------
-# Reciever And Processor Test Function
-# -----------------------------------
-@app.route('/', methods=['POST'])
-def test():
-    input_text = request.form["tweet"]
-    input_button = request.form["button"]
-
-    print(input_text)
-    print(input_button)
-
-    text = preprocess_text(input_text)
-    pred = model.predict(text)
-
-    return render_template("index.html", pred=str(pred))
 
 
 if __name__ == '__main__':
