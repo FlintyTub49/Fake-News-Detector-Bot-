@@ -19,7 +19,7 @@ punctuation = list(string.punctuation)
 stop.update(punctuation)
 
 codePath = os.path.dirname(os.path.abspath('preprocessing.py'))
-tokens = os.path.join(codePath, 'Models/1DHighBias90.pk')
+tokens = os.path.join(codePath, 'Models/listone.pk')
 tokenizer = pk.load(open(tokens, 'rb'))
 
 
