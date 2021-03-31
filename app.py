@@ -72,7 +72,7 @@ def bot():
     # --------------------------
     if any(hello in incoming_msg for hello in hello_list) and hello_flag == 0:
         set_global_flag(value=1)
-
+        
         hello_message = """_Hi, 
         I am *COVID19 Mythbuster*_ 👋🏻
 
