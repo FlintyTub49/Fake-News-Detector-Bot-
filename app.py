@@ -1,8 +1,8 @@
 import os
 from flask import Flask, request, render_template
-import requests
+# import requests
 
-from keras.models import load_model
+from tensorflow.keras.models import load_model
 
 from preprocessing import preprocess_text
 

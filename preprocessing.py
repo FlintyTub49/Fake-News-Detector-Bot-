@@ -1,15 +1,14 @@
-from keras.preprocessing import sequence
-import keras
+from tensorflow.keras.preprocessing import sequence
 import pickle as pk
+
+import nltk
 from nltk.corpus import stopwords
+
 import numpy as np
 import string
 from bs4 import BeautifulSoup
 import re
 import os
-
-import nltk
-nltk.download('stopwords')
 
 
 # ---------------------------------
