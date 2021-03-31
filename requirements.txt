@@ -8,3 +8,4 @@ numpy>=1.19.2
 beautifulsoup4>=4.9.1
 nltk>=3.5
 matplotlib>=1.4.3s
+gunicorn>=20.1.0

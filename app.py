@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template, g
+from flask import Flask, request, render_template
 import requests
 
 from keras.models import load_model
@@ -7,7 +7,6 @@ from keras.models import load_model
 from preprocessing import preprocess_text
 
 from twilio.twiml.messaging_response import MessagingResponse
-from twilio import twiml
 from twilio.rest import Client
 
 
@@ -68,10 +67,24 @@ def bot():
     hello_list = ['hello', 'hey', 'start', 'hi']
     global hello_flag
 
+    # --------------------------
+    # First Time Welcome Message
+    # --------------------------
     if any(hello in incoming_msg for hello in hello_list) and hello_flag == 0:
         set_global_flag(value=1)
 
-        hello_message = """Welcome to COVID Mythbuster. Send or forward a message to me to get started with detection"""
+        hello_message = """_Hi, 
+        I am *COVID19 Mythbuster*_ 👋🏻
+
+        ◻️ _In these crazy hyperconnected times, there is a lot of FAKE NEWS spreading about the NOVEL CORONAVIRUS._
+
+        ◻️ _I Can Help You In Differentiating the Fake News From The Real News_ 📰
+
+        ◻️ _All you need to do is send me the news you get to verify if it Real or not._ 
+
+        _It's that simple 😃
+        Try it for yourself, simply send me a News About COVID19 and I'll try to tell if it is Fake Or Real_ ✌🏻✅
+        """
 
         msg.body(hello_message)
         responded = True
@@ -119,4 +132,3 @@ def test():
 if __name__ == '__main__':
     hello_flag = 0
     app.run(debug=True)
-    # main()
