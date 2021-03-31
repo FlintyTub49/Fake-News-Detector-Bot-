@@ -9,7 +9,6 @@ import re
 import os
 
 import nltk
-nltk.download('stopwords')
 
 
 # ---------------------------------
