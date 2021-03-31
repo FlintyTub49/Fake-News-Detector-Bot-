@@ -17,7 +17,7 @@ from twilio.rest import Client
 # client = Client(account_sid, auth_token)
 
 codePath = os.path.dirname(os.path.abspath('preprocessing.py'))
-tokens = os.path.join(codePath, 'Models/90HighBias1D.h5')
+tokens = os.path.join(codePath, 'Models/codalab_df_listone.h5')
 model = load_model(tokens)
 
 hello_flag = 0

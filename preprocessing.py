@@ -19,7 +19,7 @@ punctuation = list(string.punctuation)
 stop.update(punctuation)
 
 codePath = os.path.dirname(os.path.abspath('preprocessing.py'))
-tokens = os.path.join(codePath, 'Models/1DHighBias90.pk')
+tokens = os.path.join(codePath, 'Models/listone.pk')
 tokenizer = pk.load(open(tokens, 'rb'))
 
 
@@ -91,7 +91,7 @@ def preprocess_text(text):
     text = denoise_text(text)
 
     # Specifying Max Length Of The Data
-    maxlen = 300
+    maxlen = 90
     tokenized_user = tokenizer.texts_to_sequences([text])
     user = sequence.pad_sequences(tokenized_user, maxlen=maxlen)
 
