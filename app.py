@@ -40,8 +40,11 @@ def respond():
     text = update.message.text.encode('utf-8').decode()
     print("got text message :", text)
 
-    response = ''
-    if any(hello in incoming_msg for hello in hello_list) and hello_flag == 0:
+    hello_list = ['hello', 'hey', 'start', 'hi']
+    global hello_flag
+
+    response = 'No Response'
+    if any(hello in text for hello in hello_list) and hello_flag == 0:
         set_global_flag(value=1)
         response = """_Hi, 
         I am *COVID19 Mythbuster*_ 👋🏻
@@ -84,10 +87,12 @@ def set_webhook():
     else:
         return "webhook setup failed"
 
+
 @app.route('/')
 def index():
     return '.'
 
 
 if __name__ == '__main__':
+    hello_flag = 0
     app.run(threaded=True)
