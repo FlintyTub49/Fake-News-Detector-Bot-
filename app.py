@@ -47,66 +47,9 @@ def home():
     #     responded = True
 
 
-# -----------------------------------
-# Bot Command Reciever And Processor
-# -----------------------------------
-# @app.route('/bot', methods=['POST'])
-# def bot():
-#     incoming_msg = request.values.get('Body', '').lower()
-#     resp = MessagingResponse()
-#     msg = resp.message()
-#     responded = False
-
-#     hello_list = ['hello', 'hey', 'start', 'hi']
-
-#     # --------------------------
-#     # First Time Welcome Message
-#     # --------------------------
-#     if any(hello == incoming_msg for hello in hello_list) and hello_flag == 0:
-#         set_global_flag(value=1)
-
-#         hello_message = """_Hi,
-#         I am *COVID19 Mythbuster*_ 👋🏻
-
-#         ◻️ _In these crazy hyperconnected times, there is a lot of FAKE NEWS spreading about the NOVEL CORONAVIRUS._
-
-#         ◻️ _I Can Help You In Differentiating the Fake News From The Real News_ 📰
-
-#         ◻️ _All you need to do is send me the news you get to verify if it Real or not._
-
-#         _It's that simple 😃
-#         Try it for yourself, simply send me a News About COVID19 and I'll try to tell if it is Fake Or Real_ ✌🏻✅
-#         """
-
-#         msg.body(hello_message)
-#         responded = True
-
-#     else:
-#         text = preprocess_text(incoming_msg)
-#         pred = model.predict(text)[0][0]
-
-#         output = ''
-
-#         if pred > 0.5:
-#             output = "The given news is real"
-#             responded = True
-#         elif pred < 0.5:
-#             output = "The given news is fake"
-#             responded = True
-
-#         msg.body(output)
-
-#     if not responded:
-#         msg.body(
-#             """That didn't quite work! Try some other text, or send a
-#             Hello to get started if you haven't already""")
-
-#     return str(resp)
-
-
-# -----------------------------------
-# Reciever And Processor Test Function
-# -----------------------------------
+# --------------------------------------
+# Reciever And Processor Output Function
+# --------------------------------------
 @app.route('/', methods=['POST'])
 def output():
 
