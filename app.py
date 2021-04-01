@@ -5,6 +5,10 @@ from preprocessing import preprocess_text
 from keras.models import load_model
 import os
 
+from rake_nltk import Rake
+from googlesearch import search
+import urllib.request as urllib
+
 global bot
 global TOKEN
 TOKEN = bot_token
@@ -71,8 +75,25 @@ def respond():
 
         if pred > 0.5:
             response = "The given news is real"
+
         elif pred < 0.5:
-            response = "The given news is fake"
+            # ------------------------------------
+            # Find Links Related to Keyword Search
+            # ------------------------------------
+            # sent = incoming_msg.split('.')
+            # r = Rake()
+            # r.extract_keywords_from_sentences(sent)
+            # put_links = True
+            # query = ' '.join(r.get_ranked_phrases()[:5])
+
+            # links = []
+            # for i in search(query, country = 'india', lang = 'en', num = 3, start = 0, stop = 3):
+            #     links.append(i)
+            if put_links:
+                response = 'The Given News is Fake. ❌\nBelow are some links I found that might\
+                     be useful.\n' + links[0] + '\n' + links[1] + '\n' + links[2]
+            else:
+                response = "The Given News is Fake. ❌"
 
     bot.sendMessage(chat_id=chat_id, text=response, reply_to_message_id=msg_id)
 
