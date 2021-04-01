@@ -17,17 +17,10 @@ auth_token = os.environ['TWILIO_AUTH_TOKEN']
 client = Client(account_sid, auth_token)
 
 codePath = os.path.dirname(os.path.abspath('preprocessing.py'))
-tokens = os.path.join(codePath, 'Models/90HighBias1D.h5')
+tokens = os.path.join(codePath, 'Models/codalab_df_listone.h5')
 model = load_model(tokens)
 
-hello_flag = 0
-
 app = Flask(__name__)
-
-
-def set_global_flag(value=1):
-    global hello_flag
-    hello_flag = 1
 
 
 # @app.before_request
@@ -57,78 +50,106 @@ def home():
 # -----------------------------------
 # Bot Command Reciever And Processor
 # -----------------------------------
-@app.route('/bot', methods=['POST'])
-def bot():
-    incoming_msg = request.values.get('Body', '').lower()
-    resp = MessagingResponse()
-    msg = resp.message()
-    responded = False
+# @app.route('/bot', methods=['POST'])
+# def bot():
+#     incoming_msg = request.values.get('Body', '').lower()
+#     resp = MessagingResponse()
+#     msg = resp.message()
+#     responded = False
 
-    hello_list = ['hello', 'hey', 'start', 'hi']
-    global hello_flag
+#     hello_list = ['hello', 'hey', 'start', 'hi']
 
-    # --------------------------
-    # First Time Welcome Message
-    # --------------------------
-    if any(hello in incoming_msg for hello in hello_list) and hello_flag == 0:
-        set_global_flag(value=1)
+#     # --------------------------
+#     # First Time Welcome Message
+#     # --------------------------
+#     if any(hello == incoming_msg for hello in hello_list) and hello_flag == 0:
+#         set_global_flag(value=1)
 
-        hello_message = """_Hi, 
-        I am *COVID19 Mythbuster*_ 👋🏻
+#         hello_message = """_Hi,
+#         I am *COVID19 Mythbuster*_ 👋🏻
 
-        ◻️ _In these crazy hyperconnected times, there is a lot of FAKE NEWS spreading about the NOVEL CORONAVIRUS._
+#         ◻️ _In these crazy hyperconnected times, there is a lot of FAKE NEWS spreading about the NOVEL CORONAVIRUS._
 
-        ◻️ _I Can Help You In Differentiating the Fake News From The Real News_ 📰
+#         ◻️ _I Can Help You In Differentiating the Fake News From The Real News_ 📰
 
-        ◻️ _All you need to do is send me the news you get to verify if it Real or not._ 
+#         ◻️ _All you need to do is send me the news you get to verify if it Real or not._
 
-        _It's that simple 😃
-        Try it for yourself, simply send me a News About COVID19 and I'll try to tell if it is Fake Or Real_ ✌🏻✅
-        """
+#         _It's that simple 😃
+#         Try it for yourself, simply send me a News About COVID19 and I'll try to tell if it is Fake Or Real_ ✌🏻✅
+#         """
 
-        msg.body(hello_message)
-        responded = True
+#         msg.body(hello_message)
+#         responded = True
 
-    else:
-        text = preprocess_text(incoming_msg)
-        pred = model.predict(text)[0][0]
+#     else:
+#         text = preprocess_text(incoming_msg)
+#         pred = model.predict(text)[0][0]
 
-        output = ''
+#         output = ''
 
-        if pred > 0.5:
-            output = "The given news is real"
-            responded = True
-        elif pred < 0.5:
-            output = "The given news is fake"
-            responded = True
+#         if pred > 0.5:
+#             output = "The given news is real"
+#             responded = True
+#         elif pred < 0.5:
+#             output = "The given news is fake"
+#             responded = True
 
-        msg.body(output)
+#         msg.body(output)
 
-    if not responded:
-        msg.body(
-            """That didn't quite work! Try some other text, or send a
-            Hello to get started if you haven't already""")
+#     if not responded:
+#         msg.body(
+#             """That didn't quite work! Try some other text, or send a
+#             Hello to get started if you haven't already""")
 
-    return str(resp)
+#     return str(resp)
 
 
 # -----------------------------------
 # Reciever And Processor Test Function
 # -----------------------------------
 @app.route('/', methods=['POST'])
-def test():
+def output():
+
+    # hello_list = ['hello', 'hey', 'start', 'hi']
+
     input_text = request.form["tweet"]
     input_button = request.form["button"]
 
-    print(input_text)
-    print(input_button)
+    # Unused message, not required for webapp
+    # --------------------------
+    # First Time Welcome Message
+    # --------------------------
+    # if any(hello == input_text for hello in hello_list):
 
+    #     hello_message = """_Hi,
+    #     I am *COVID19 Mythbuster*_ 👋🏻
+
+    #     ◻️ _In these crazy hyperconnected times, there is a lot of FAKE NEWS spreading about the NOVEL CORONAVIRUS._
+
+    #     ◻️ _I Can Help You In Differentiating the Fake News From The Real News_ 📰
+
+    #     ◻️ _All you need to do is send me the news you get to verify if it Real or not._
+
+    #     _It's that simple 😃
+    #     Try it for yourself, simply send me a News About COVID19 and I'll try to tell if it is Fake Or Real_ ✌🏻✅
+    #     """
+
+    #     msg.body(hello_message)
+    #     responded = True
+
+    # else:
     text = preprocess_text(input_text)
-    pred = model.predict(text)
+    pred = model.predict(text)[0][0]
 
-    return render_template("index.html", pred=str(pred))
+    output = ''
+
+    if pred > 0.5:
+        output = "The given news is real"
+    elif pred < 0.5:
+        output = "The given news is fake"
+
+    return render_template("index.html", pred=(output))
 
 
 if __name__ == '__main__':
-    hello_flag = 0
     app.run(debug=True)
