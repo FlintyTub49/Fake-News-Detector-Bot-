@@ -1,14 +1,16 @@
 import os
 from flask import Flask, request, render_template
-# import requests
 
 from tensorflow.keras.models import load_model
-
 from preprocessing import preprocess_text
 
 from twilio.twiml.messaging_response import MessagingResponse
 from twilio.rest import Client
 
+
+from rake_nltk import Rake
+from googlesearch import search
+import urllib.request as urllib
 
 # Your Account Sid and Auth Token from twilio.com/console
 # and set the environment variables. See http://twil.io/secure
@@ -64,6 +66,7 @@ def bot():
     responded = False
 
     hello_list = ['hello', 'hey', 'start', 'hi']
+    put_links = False
     # global hello_flag
 
     # --------------------------
@@ -96,10 +99,27 @@ def bot():
         output = ''
 
         if pred > 0.5:
-            output = "The given news is real"
+            output = "The Given News is Real. ✅"
             responded = True
+
         elif pred < 0.5:
-            output = "The given news is fake"
+            # ------------------------------------
+            # Find Links Related to Keyword Search
+            # ------------------------------------
+            # sent = incoming_msg.split('.')
+            # r = Rake()
+            # r.extract_keywords_from_sentences(sent)
+            # put_links = True
+            # query = ' '.join(r.get_ranked_phrases()[:5])
+
+            # links = []
+            # for i in search(query, country = 'india', lang = 'en', num = 3, start = 0, stop = 3):
+            #     links.append(i)
+            if put_links:
+                output = 'The Given News is Fake. ❌\nBelow are some links I found that might\
+                     be useful.\n' + links[0] + '\n' + links[1] + '\n' + links[2]
+            else:
+                output = "The Given News is Fake. ❌"
             responded = True
 
         msg.body(output)
