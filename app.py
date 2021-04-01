@@ -17,11 +17,11 @@ model = load_model(tokens)
 # ----------------------------------------
 # Flag Value To Print Introductory Message
 # ----------------------------------------
-hello_flag = 0
+# hello_flag = 0
 
-def set_global_flag(value=1):
-    global hello_flag
-    hello_flag = 1
+# def set_global_flag(value=1):
+#     global hello_flag
+#     hello_flag = 1
 
 app = Flask(__name__)
 
@@ -46,8 +46,9 @@ def respond():
     global hello_flag
 
     response = 'No Response'
-    if any(hello in text for hello in hello_list) and hello_flag == 0:
-        set_global_flag(value=1)
+    if any(hello == text.lower() for hello in hello_list):
+        #  and hello_flag == 0:
+        # set_global_flag(value=1)
         response = """_Hi, 
         I am *COVID19 Mythbuster*_ 👋🏻
 
@@ -61,7 +62,7 @@ def respond():
         Try it for yourself, simply send me a News About COVID19 and I'll try to tell if it is Fake Or Real_ ✌🏻✅
         """
 
-    else: 
+    else:
         # ----------------------------------------
         # To Preprocess and Print The Predictions
         # ----------------------------------------
