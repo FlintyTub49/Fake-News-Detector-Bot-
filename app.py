@@ -20,15 +20,14 @@ codePath = os.path.dirname(os.path.abspath('preprocessing.py'))
 tokens = os.path.join(codePath, 'Models/codalab_df_listone.h5')
 model = load_model(tokens)
 
-hello_flag = 0
+# hello_flag = 0
 
 app = Flask(__name__)
 
 
-def set_global_flag(value=1):
-    global hello_flag
-    hello_flag = 1
-
+# def set_global_flag(value=1):
+#     global hello_flag
+#     hello_flag = 1
 
 # @app.before_request
 # def init_global_flag():
@@ -54,7 +53,6 @@ def home():
     #     responded = True
 
 
-
 # -----------------------------------
 # Bot Command Reciever And Processor
 # -----------------------------------
@@ -66,15 +64,16 @@ def bot():
     responded = False
 
     hello_list = ['hello', 'hey', 'start', 'hi']
-    global hello_flag
+    # global hello_flag
 
     # --------------------------
     # First Time Welcome Message
     # --------------------------
-    if any(hello in incoming_msg for hello in hello_list) and hello_flag == 0:
-        set_global_flag(value=1)
+    if any(hello == incoming_msg for hello in hello_list):
+        # and hello_flag == 0:
+        # set_global_flag(value=1)
 
-        hello_message = """_Hi,_ 
+        hello_message = """_Hi,_
         _I am *COVID19 Mythbuster*_ 👋🏻
 
         ◻️ _In these crazy hyperconnected times, there is a lot of FAKE NEWS spreading about the NOVEL CORONAVIRUS._
