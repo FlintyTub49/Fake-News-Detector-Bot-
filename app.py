@@ -53,17 +53,17 @@ def respond():
     if any(hello == text.lower() for hello in hello_list):
         #  and hello_flag == 0:
         # set_global_flag(value=1)
-        response = """_Hi, 
-        I am *COVID19 Mythbuster*_ 👋🏻
+        response = """Hi, 
+        I am COVID19 Mythbuster 👋🏻
 
-        ◻️ _In these crazy hyperconnected times, there is a lot of FAKE NEWS spreading about the NOVEL CORONAVIRUS._
+        ◻️ In these crazy hyperconnected times, there is a lot of FAKE NEWS spreading about the NOVEL CORONAVIRUS.
 
-        ◻️ _I Can Help You In Differentiating the Fake News From The Real News_ 📰
+        ◻️ I Can Help You In Differentiating the Fake News From The Real News 📰
 
-        ◻️ _All you need to do is send me the news you get to verify if it Real or not._ 
+        ◻️ All you need to do is send me the news you get to verify if it Real or not. 
 
-        _It's that simple 😃
-        Try it for yourself, simply send me a News About COVID19 and I'll try to tell if it is Fake Or Real_ ✌🏻✅
+        It's that simple 😃
+        Try it for yourself, simply send me a News About COVID19 and I'll try to tell if it is Fake Or Real. ✌🏻✅
         """
 
     else:
