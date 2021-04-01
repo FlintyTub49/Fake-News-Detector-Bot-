@@ -70,8 +70,8 @@ def respond():
         # ----------------------------------------
         # To Preprocess and Print The Predictions
         # ----------------------------------------
-        text = preprocess_text(text)
-        pred = model.predict(text)[0][0]
+        text_new = preprocess_text(text)
+        pred = model.predict(text_new)[0][0]
 
         if pred > 0.5:
             response = "The given news is real"
@@ -80,7 +80,7 @@ def respond():
             # ------------------------------------
             # Find Links Related to Keyword Search
             # ------------------------------------
-            # sent = incoming_msg.split('.')
+            # sent = text.split('.')
             # r = Rake()
             # r.extract_keywords_from_sentences(sent)
             # put_links = True
