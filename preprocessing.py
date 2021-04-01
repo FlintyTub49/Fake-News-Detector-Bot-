@@ -91,7 +91,7 @@ def preprocess_text(text):
     text = denoise_text(text)
 
     # Specifying Max Length Of The Data
-    maxlen = 300
+    maxlen = 90
     tokenized_user = tokenizer.texts_to_sequences([text])
     user = sequence.pad_sequences(tokenized_user, maxlen=maxlen)
 

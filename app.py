@@ -48,7 +48,7 @@ def respond():
 
     hello_list = ['hello', 'hey', 'start', 'hi']
     global hello_flag
-
+    put_links = False
     response = 'No Response'
     if any(hello == text.lower() for hello in hello_list):
         #  and hello_flag == 0:
