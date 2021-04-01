@@ -3,21 +3,55 @@ from flask import Flask, request, render_template
 import requests
 
 from keras.models import load_model
-from twilio.twiml.messaging_response import MessagingResponse
 
 from preprocessing import preprocess_text
+
+from twilio.twiml.messaging_response import MessagingResponse
+from twilio.rest import Client
+
+
+# Your Account Sid and Auth Token from twilio.com/console
+# and set the environment variables. See http://twil.io/secure
+account_sid = os.environ['TWILIO_ACCOUNT_SID']
+auth_token = os.environ['TWILIO_AUTH_TOKEN']
+client = Client(account_sid, auth_token)
 
 codePath = os.path.dirname(os.path.abspath('preprocessing.py'))
 tokens = os.path.join(codePath, 'Models/90HighBias1D.h5')
 model = load_model(tokens)
 
+hello_flag = 0
 
 app = Flask(__name__)
+
+
+def set_global_flag(value=1):
+    global hello_flag
+    hello_flag = 1
+
+
+# @app.before_request
+# def init_global_flag():
+#     g.hello_flag = 0
 
 
 @app.route('/')
 def home():
     return render_template("index.html")
+
+# CODE FOR REQUESTS ONLINE ON SEARCH/ASKING FROM USER
+    # # return a quote
+    # r = requests.get('https://api.quotable.io/random')
+    # if r.status_code == 200:
+    #     data = r.json()
+    #     quote = f'{data["content"]} ({data["author"]})'
+    # else:
+    #     quote = 'I could not retrieve a quote at this time, sorry.'
+
+    # if 'cat' in incoming_msg:
+    #     # return a cat pic
+    #     msg.media('https://cataas.com/cat')
+    #     responded = True
 
 
 # -----------------------------------
@@ -25,43 +59,55 @@ def home():
 # -----------------------------------
 @app.route('/bot', methods=['POST'])
 def bot():
-    # input_text = request.form["tweet"]
     incoming_msg = request.values.get('Body', '').lower()
     resp = MessagingResponse()
     msg = resp.message()
     responded = False
 
-    # if 'quote' in incoming_msg:
-    #     # return a quote
-    #     r = requests.get('https://api.quotable.io/random')
-    #     if r.status_code == 200:
-    #         data = r.json()
-    #         quote = f'{data["content"]} ({data["author"]})'
-    #     else:
-    #         quote = 'I could not retrieve a quote at this time, sorry.'
-    #     msg.body(quote)
-    #     responded = True
-    # if 'cat' in incoming_msg:
-    #     # return a cat pic
-    #     msg.media('https://cataas.com/cat')
-    #     responded = True
+    hello_list = ['hello', 'hey', 'start', 'hi']
+    global hello_flag
 
-    text = preprocess_text(incoming_msg)
-    pred = model.predict(text)[0][0]
+    # --------------------------
+    # First Time Welcome Message
+    # --------------------------
+    if any(hello in incoming_msg for hello in hello_list) and hello_flag == 0:
+        set_global_flag(value=1)
 
-    output = ''
+        hello_message = """_Hi, 
+        I am *COVID19 Mythbuster*_ 👋🏻
 
-    if pred > 0.5:
-        output = "The given news is real"
-        responded = True
-    elif pred < 0.5:
-        output = "The given news is fake"
+        ◻️ _In these crazy hyperconnected times, there is a lot of FAKE NEWS spreading about the NOVEL CORONAVIRUS._
+
+        ◻️ _I Can Help You In Differentiating the Fake News From The Real News_ 📰
+
+        ◻️ _All you need to do is send me the news you get to verify if it Real or not._ 
+
+        _It's that simple 😃
+        Try it for yourself, simply send me a News About COVID19 and I'll try to tell if it is Fake Or Real_ ✌🏻✅
+        """
+
+        msg.body(hello_message)
         responded = True
 
-    msg.body(output)
+    else:
+        text = preprocess_text(incoming_msg)
+        pred = model.predict(text)[0][0]
+
+        output = ''
+
+        if pred > 0.5:
+            output = "The given news is real"
+            responded = True
+        elif pred < 0.5:
+            output = "The given news is fake"
+            responded = True
+
+        msg.body(output)
 
     if not responded:
-        msg.body('I only know about famous quotes and cats, sorry!')
+        msg.body(
+            """That didn't quite work! Try some other text, or send a
+            Hello to get started if you haven't already""")
 
     return str(resp)
 
@@ -82,18 +128,7 @@ def test():
 
     return render_template("index.html", pred=str(pred))
 
-# ---------------------------------
-# Mostly To Be Deleted
-# ---------------------------------
-
-
-def main():
-    x = input('Please Enter Some Text:')
-    x = preprocess_text(x)
-    pred = model.predict(x)
-    print(pred)
-
 
 if __name__ == '__main__':
+    hello_flag = 0
     app.run(debug=True)
-    # main()
