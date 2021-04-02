@@ -2,12 +2,13 @@ import os
 from flask import Flask, request, render_template
 import requests
 import pickle as pk
+from bs4 import BeautifulSoup
 
 from preprocessing import preprocess_text
 
 from rake_nltk import Rake
 from googlesearch import search
-import urllib.request as urllib
+import urllib.request as urllib, urlopen
 
 
 codePath = os.path.dirname(os.path.abspath('preprocessing.py'))
@@ -70,6 +71,11 @@ def output():
         links = []
         for i in search(query, country='india', lang='en', num=3, start=0, stop=3):
             links.append(i)
+
+        headings = []
+        for i in links:
+            soup = BeautifulSoup(urlopen(url))
+            headings.append(soup.title.get_text())
 
         return render_template("index.html", pred=(output), scroll="scrollable", articles=links)
 
