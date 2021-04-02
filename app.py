@@ -94,6 +94,7 @@ def output():
         output = "The given news is fake"
         # TODO: Add fact checker, create table or use the clickable div thingy in template
 
+    # TODO: Fix scrolling
     return render_template("index.html", pred=(output), scroll="scrollable")
 
 
