@@ -9,6 +9,7 @@ from preprocessing import preprocess_text
 from rake_nltk import Rake
 from googlesearch import search
 import urllib.request as urllib
+from urllib.request import urlopen
 
 
 codePath = os.path.dirname(os.path.abspath('preprocessing.py'))
@@ -66,17 +67,27 @@ def output():
         r = Rake()
         r.extract_keywords_from_sentences(sent)
         put_links = True
-        query = ' '.join(r.get_ranked_phrases()[:5])
+        query = ' '.join(r.get_ranked_phrases()[:3])
 
-        links = []
-        for i in search(query, country='india', lang='en', num=3, start=0, stop=3):
-            links.append(i)
+        hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
+        'Accept-Encoding': 'none',
+        'Accept-Language': 'en-US,en;q=0.8',
+        'Connection': 'keep-alive'}
 
-        headings = []
-        for i in links:
-            soup = BeautifulSoup(urllib.urlopen(url))
-            headings.append(soup.title.get_text())
+        links, headings = [], []
+        if query:
+            for i in search(query, country='india', lang='en', num=3, start=0, stop=3):
+                links.append(i)
 
+            for i in links:
+                url = urllib.Request(i, headers = hdr)
+                soup = BeautifulSoup(urllib.urlopen(url))
+                headings.append(soup.title.get_text())
+        else:
+            return render_template("index.html", pred=(output), scroll="scrollable")
+            
         return render_template("index.html", pred=(output), scroll="scrollable", articles=links)
 
     return render_template("index.html", pred=(output), scroll="scrollable")
