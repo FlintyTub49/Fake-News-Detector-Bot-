@@ -21,7 +21,7 @@
     <link href="" rel="stylesheet">
 
 
-    <title>Title page</title>
+    <title>COVID Mythbuster</title>
     <link href="../static/main.550dcf66.css" rel="stylesheet">
 </head>
 
@@ -96,9 +96,35 @@
                 </div>
             </div>
         </div>
-
-
     </div>
+
+    <!-- <a id="project"> -->
+    <div class="container mt-2 ">
+        <div class="row ">
+            <div class="col-12 text-center ">
+                <h2>Fact Check</h2>
+                <p>
+                    Verifying claims with online news sources
+                </p>
+            </div>
+        </div>
+
+        <div class="row ">
+            <div class="card-deck ">
+                {% for article in articles %} {% for article_text in article %}
+                <div class="card ">
+                    <div class="card-body ">
+                        <h5 class="card-title ">{{ article }}</h5>
+                        <p class="card-text ">
+                            <font color="#BEB9B9 ">{{ article_text }}</font>
+                        </p>
+                    </div>
+                </div>
+                {% endfor %} {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- </a> -->
 
     <script>
         document.addEventListener("DOMContentLoaded", function(event) {

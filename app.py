@@ -2,8 +2,12 @@ import os
 from flask import Flask, request, render_template
 import requests
 import pickle as pk
-# from keras.models import load_model
+
 from preprocessing import preprocess_text
+
+from rake_nltk import Rake
+from googlesearch import search
+import urllib.request as urllib
 
 
 codePath = os.path.dirname(os.path.abspath('preprocessing.py'))
@@ -57,6 +61,17 @@ def output():
     elif pred < 0.5:
         output = "The Given News is Fake. ❌"
         # TODO: Add fact checker, create table or use the clickable div thingy in template
+        sent = input_text.split('.')
+        r = Rake()
+        r.extract_keywords_from_sentences(sent)
+        put_links = True
+        query = ' '.join(r.get_ranked_phrases()[:5])
+
+        links = []
+        for i in search(query, country='india', lang='en', num=3, start=0, stop=3):
+            links.append(i)
+
+        return render_template("index.html", pred=(output), scroll="scrollable", articles=links)
 
     return render_template("index.html", pred=(output), scroll="scrollable")
 
