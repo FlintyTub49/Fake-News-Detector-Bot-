@@ -8,7 +8,7 @@ from preprocessing import preprocess_text
 
 from rake_nltk import Rake
 from googlesearch import search
-import urllib.request as urllib, urlopen
+import urllib.request as urllib
 
 
 codePath = os.path.dirname(os.path.abspath('preprocessing.py'))
@@ -74,7 +74,7 @@ def output():
 
         headings = []
         for i in links:
-            soup = BeautifulSoup(urlopen(url))
+            soup = BeautifulSoup(urllib.urlopen(url))
             headings.append(soup.title.get_text())
 
         return render_template("index.html", pred=(output), scroll="scrollable", articles=links)
