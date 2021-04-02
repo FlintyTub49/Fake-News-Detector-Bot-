@@ -52,14 +52,12 @@ def output():
     pred = pipeline.predict([text])
 
     output = ''
-    # TODO: Improve output, output input_text as well along with the output
     if pred > 0.5:
         output = "The Given News is Real. ✅"
     elif pred < 0.5:
         output = "The Given News is Fake. ❌"
         # TODO: Add fact checker, create table or use the clickable div thingy in template
 
-    # TODO: Fix scrolling
     return render_template("index.html", pred=(output), scroll="scrollable")
 
 
