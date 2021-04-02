@@ -20,7 +20,7 @@ codePath = os.path.dirname(os.path.abspath('preprocessing.py'))
 tokens = os.path.join(codePath, 'Models/codalab_df_listone.h5')
 model = load_model(tokens)
 
-
+# TODO: Fix js files not working
 app = Flask(__name__, template_folder='templates')
 
 app.config['EXPLAIN_TEMPLATE_LOADING'] = True
@@ -57,7 +57,7 @@ def output():
 
     # hello_list = ['hello', 'hey', 'start', 'hi']
 
-    input_text = request.form["tweet"]
+    input_text = request.form["news"]
     input_button = request.form["button"]
 
     # Unused message, not required for webapp
@@ -87,13 +87,14 @@ def output():
     pred = model.predict(text)[0][0]
 
     output = ''
-
+    # TODO: Improve output, output input_text as well along with the output
     if pred > 0.5:
         output = "The given news is real"
     elif pred < 0.5:
         output = "The given news is fake"
+        # TODO: Add fact checker, create table or use the clickable div thingy in template
 
-    return render_template("index.html", pred=(output))
+    return render_template("index.html", pred=(output), scroll="scrollable")
 
 
 if __name__ == '__main__':
