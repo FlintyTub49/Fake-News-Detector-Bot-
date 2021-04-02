@@ -2,7 +2,8 @@ from flask import Flask, request
 import telegram
 from credentials import bot_token, bot_user_name, URL
 from preprocessing import preprocess_text
-from keras.models import load_model
+# from keras.models import load_model
+import pickle as pk
 import os
 
 from rake_nltk import Rake
@@ -14,9 +15,9 @@ global TOKEN
 TOKEN = bot_token
 bot = telegram.Bot(token=TOKEN)
 
-codePath = os.path.dirname(os.path.abspath('preprocessing.py'))
-tokens = os.path.join(codePath, 'Models/codalab_df_listone.h5')
-model = load_model(tokens)
+codePath = os.path.dirname(os.path.abspath('app.py'))
+pipe = os.path.join(codePath, 'Models/100lenPipelineLem.pk')
+pipeline = pk.load(open(pipe, 'rb'))
 
 # ----------------------------------------
 # Flag Value To Print Introductory Message
@@ -71,7 +72,7 @@ def respond():
         # To Preprocess and Print The Predictions
         # ----------------------------------------
         text_new = preprocess_text(text)
-        pred = model.predict(text_new)[0][0]
+        pred = pipeline.predict([text_new])
 
         if pred > 0.5:
             response = "The given news is real. ✅"
