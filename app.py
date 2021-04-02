@@ -68,10 +68,10 @@ def bot():
 
     hello_list = ['hello', 'hey', 'start', 'hi']
 
-    vis = ['visualize', 'image', 'wordcloud', 'wordcount']
-    if len(incoming_msg.strip().split(' ')) > 1:
-        first = incoming_msg.split(' ')[0]
-        second = incoming_msg.split(' ')[1]
+    # vis = ['visualize', 'image', 'wordcloud', 'wordcount']
+    # if len(incoming_msg.strip().split(' ')) > 1:
+    #     first = incoming_msg.split(' ')[0]
+    #     second = incoming_msg.split(' ')[1]
 
     put_links = False
     # global hello_flag
@@ -102,17 +102,17 @@ def bot():
     # ------------------------------------
     # Visualizations Query
     # ------------------------------------
-    elif any(img == first.lower() for img in vis) and len(incoming_msg.strip().split(' ')) > 1:
-        image = ''
-        if second == 'fake':
-            image = os.path.join(codePath, 'wordClouds/wcFake.jpg')
+    # elif any(img == first.lower() for img in vis) and len(incoming_msg.strip().split(' ')) > 1:
+    #     image = ''
+    #     if second == 'fake':
+    #         image = os.path.join(codePath, 'wordClouds/wcFake.jpg')
 
-        else:
-            image = os.path.join(codePath, 'wordClouds/wcReal.jpg')
+    #     else:
+    #         image = os.path.join(codePath, 'wordClouds/wcReal.jpg')
         
-        # bot.send_photo(chat_id = chat_id, photo = open(image, 'rb'), reply_to_message_id = msg_id)
-        msg.media(open(image, 'rb'))
-        responded = True
+    #     # bot.send_photo(chat_id = chat_id, photo = open(image, 'rb'), reply_to_message_id = msg_id)
+    #     msg.media(open(image, 'rb'))
+    #     responded = True
 
     else:
         text = preprocess_text(incoming_msg)
