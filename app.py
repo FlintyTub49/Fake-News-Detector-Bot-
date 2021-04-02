@@ -1,9 +1,8 @@
 import os
 from flask import Flask, request, render_template
 import requests
-
-from keras.models import load_model
-
+import pickle as pk
+# from keras.models import load_model
 from preprocessing import preprocess_text
 
 from twilio.twiml.messaging_response import MessagingResponse
@@ -17,8 +16,8 @@ from twilio.rest import Client
 # client = Client(account_sid, auth_token)
 
 codePath = os.path.dirname(os.path.abspath('preprocessing.py'))
-tokens = os.path.join(codePath, 'Models/codalab_df_listone.h5')
-model = load_model(tokens)
+pipe = os.path.join(codePath, 'Models/100lenPipelineLem.pk')
+pipeline = pk.load(open(pipe, 'rb'))
 
 # TODO: Fix js files not working
 app = Flask(__name__, template_folder='templates')
@@ -84,14 +83,14 @@ def output():
 
     # else:
     text = preprocess_text(input_text)
-    pred = model.predict(text)[0][0]
+    pred = pipeline.predict([text])
 
     output = ''
     # TODO: Improve output, output input_text as well along with the output
     if pred > 0.5:
-        output = "The given news is real"
+        output = "The Given News is Real. ✅"
     elif pred < 0.5:
-        output = "The given news is fake"
+        output = "The Given News is Fake. ❌"
         # TODO: Add fact checker, create table or use the clickable div thingy in template
 
     # TODO: Fix scrolling

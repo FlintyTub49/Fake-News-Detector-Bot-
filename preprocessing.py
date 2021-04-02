@@ -1,7 +1,8 @@
-from keras.preprocessing import sequence
-import keras
-import pickle as pk
+# from keras.preprocessing import sequence
+# import keras
+# import pickle as pk
 from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
 import numpy as np
 import string
 from bs4 import BeautifulSoup
@@ -18,10 +19,11 @@ nltk.download('stopwords')
 stop = set(stopwords.words('english'))
 punctuation = list(string.punctuation)
 stop.update(punctuation)
+lem = WordNetLemmatizer()
 
-codePath = os.path.dirname(os.path.abspath('preprocessing.py'))
-tokens = os.path.join(codePath, 'Models/listone.pk')
-tokenizer = pk.load(open(tokens, 'rb'))
+# codePath = os.path.dirname(os.path.abspath('preprocessing.py'))
+# tokens = os.path.join(codePath, 'Models/listone.pk')
+# tokenizer = pk.load(open(tokens, 'rb'))
 
 
 # -----------------------------------
@@ -48,7 +50,7 @@ def remove_stopwords(text):
     final_text = []
     for i in text.split():
         if i.strip().lower() not in stop:
-            final_text.append(i.strip())
+            final_text.append(lem.lemmatize(i.strip()))
     return " ".join(final_text)
 
 
@@ -92,9 +94,9 @@ def preprocess_text(text):
     text = denoise_text(text)
 
     # Specifying Max Length Of The Data
-    maxlen = 300
-    tokenized_user = tokenizer.texts_to_sequences([text])
-    user = sequence.pad_sequences(tokenized_user, maxlen=maxlen)
+    # maxlen = 300
+    # tokenized_user = tokenizer.texts_to_sequences([text])
+    # user = sequence.pad_sequences(tokenized_user, maxlen=maxlen)
 
     # Returning User A Cleaned Text
-    return user
+    return text
