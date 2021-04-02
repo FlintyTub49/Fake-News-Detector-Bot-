@@ -5,15 +5,6 @@ import pickle as pk
 # from keras.models import load_model
 from preprocessing import preprocess_text
 
-from twilio.twiml.messaging_response import MessagingResponse
-from twilio.rest import Client
-
-
-# Your Account Sid and Auth Token from twilio.com/console
-# and set the environment variables. See http://twil.io/secure
-# account_sid = os.environ['TWILIO_ACCOUNT_SID']
-# auth_token = os.environ['TWILIO_AUTH_TOKEN']
-# client = Client(account_sid, auth_token)
 
 codePath = os.path.dirname(os.path.abspath('preprocessing.py'))
 pipe = os.path.join(codePath, 'Models/100lenPipelineLem.pk')
@@ -22,7 +13,7 @@ pipeline = pk.load(open(pipe, 'rb'))
 # TODO: Fix js files not working
 app = Flask(__name__, template_folder='templates')
 
-app.config['EXPLAIN_TEMPLATE_LOADING'] = True
+# app.config['EXPLAIN_TEMPLATE_LOADING'] = True
 
 # @app.before_request
 # def init_global_flag():

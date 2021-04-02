@@ -410,7 +410,7 @@
             function i() {
                 var e = 0;
                 t(".navbar-default").removeClass("active").addClass("navbar-fixed-top"), t(document).scroll(function() {
-                    if ((e = t(this).scrollTop()) > 420) t(".navbar-default").addClass("active");
+                    if ((e = t(this).scrollTop()) > 400) t(".navbar-default").addClass("active");
                     else {
                         if (t(".navbar-default").hasClass("home") && t(".navbar-collapse").hasClass("in")) return;
                         t(".navbar-default").removeClass("active")
