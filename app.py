@@ -74,7 +74,7 @@ def respond():
         pred = model.predict(text_new)[0][0]
 
         if pred > 0.5:
-            response = "The given news is real"
+            response = "The given news is real. ✅"
 
         elif pred < 0.5:
             # ------------------------------------
