@@ -54,34 +54,9 @@ def home():
 @app.route('/', methods=['POST'])
 def output():
 
-    # hello_list = ['hello', 'hey', 'start', 'hi']
-
     input_text = request.form["news"]
-    input_button = request.form["button"]
+    # input_button = request.form["button"]
 
-    # Unused message, not required for webapp
-    # --------------------------
-    # First Time Welcome Message
-    # --------------------------
-    # if any(hello == input_text for hello in hello_list):
-
-    #     hello_message = """_Hi,
-    #     I am *COVID19 Mythbuster*_ 👋🏻
-
-    #     ◻️ _In these crazy hyperconnected times, there is a lot of FAKE NEWS spreading about the NOVEL CORONAVIRUS._
-
-    #     ◻️ _I Can Help You In Differentiating the Fake News From The Real News_ 📰
-
-    #     ◻️ _All you need to do is send me the news you get to verify if it Real or not._
-
-    #     _It's that simple 😃
-    #     Try it for yourself, simply send me a News About COVID19 and I'll try to tell if it is Fake Or Real_ ✌🏻✅
-    #     """
-
-    #     msg.body(hello_message)
-    #     responded = True
-
-    # else:
     text = preprocess_text(input_text)
     pred = pipeline.predict([text])
 
@@ -95,6 +70,11 @@ def output():
 
     # TODO: Fix scrolling
     return render_template("index.html", pred=(output), scroll="scrollable")
+
+
+@app.route('/explore')
+def explore():
+    return render_template("project.html")
 
 
 if __name__ == '__main__':

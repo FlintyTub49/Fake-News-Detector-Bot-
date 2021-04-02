@@ -11,7 +11,7 @@ import os
 
 import nltk
 nltk.download('stopwords')
-
+nltk.download('wordnet')
 
 # ---------------------------------
 # Installing All The Prerequisites

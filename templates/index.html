@@ -13,7 +13,8 @@
     <!-- Disable tap highlight on IE -->
     <meta name="msapplication-tap-highlight" content="no">
 
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="apple-touch-icon" sizes="180x180" href="../static/assets/apple-icon-180x180.png">
     <link href="../static/assets/favicon.ico" rel="icon">
 
@@ -21,7 +22,6 @@
 
 
     <title>Title page</title>
-
     <link href="../static/main.550dcf66.css" rel="stylesheet">
 </head>
 
@@ -37,15 +37,15 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-                    <a class="navbar-brand" href="./index.html" title="">
+                    <a class="navbar-brand" href="/" title="">
                         <img src="../static/assets/images/mashup-icon.svg" class="navbar-logo-img" alt=""> Mashup Template
                     </a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="./index.html" title="">Home</a></li>
-                        <li><a href="./project.html" title="">Project</a></li>
+                        <li><a href="/" title="">Home</a></li>
+                        <li><a href="/explore" title="">Project</a></li>
                         <li>
                             <p>
                                 <a href="./components.html" class="btn btn-default navbar-btn" title="">Components</a>
@@ -82,25 +82,28 @@
     </div>
 
     <div class="section-container">
-        <div class="container scrollable">
-            {% if scroll %}
-            <script>
-                document.getElementById('{{ scroll }}').scrollIntoView();
-                // or
-                // document.location.hash = '#' + '{{ scroll }}';
-            </script>
-            {% endif %}
+        <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-md-8 col-md-offset-2">
-                    <div class="text-center">
+                    <div class="text-center" id="scrollable">
+                        {% if pred %}
+
+                        <h3>{{ pred }}</h3>
+
+                        {% else %}
+
                         <h2>Checking Your News</h2>
                         <p>
-                            {% if pred %} {{ pred }} {% else %} The result of the entered news appears here after fact checking. <br>Enter some news in the text box above to start! {% endif %}
+                            The result of the entered news appears here after fact checking. <br>Enter some news in the text box above to start!
                         </p>
+
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
+
+
     </div>
 
     <script>
@@ -165,6 +168,37 @@
 
 -->
     <script type="text/javascript" src="../static/main.0cf8b554.js"></script>
+    <script type="text/javascript" src="../static/scripts.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+        $(document).on('submit', '#image-form', function(e) {
+            console.log('hello');
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: '/',
+                data: {
+                    news: $("#news-input").val()
+                },
+                success: function() {
+                    alert('saved');
+                }
+            })
+        });
+    </script>
+    {% if scroll %}
+    <script type="text/javascript">
+        // document.getElementById('{{ scroll }}').scrollIntoView();
+        //     OR 
+        $(function() {
+            $("html, body").animate({
+                scrollTop: $("#{{ scroll }}").offset().top
+            }, 500);
+        });
+    </script>
+    {% endif %}
+
 </body>
 
 </html>
