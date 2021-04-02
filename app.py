@@ -20,7 +20,7 @@ import urllib.request as urllib
 # client = Client(account_sid, auth_token)
 
 codePath = os.path.dirname(os.path.abspath('app.py'))
-pipe = os.path.join(codePath, 'Models/codalab_df_listone.h5')
+pipe = os.path.join(codePath, 'Models/100lenPipelineLem.pk')
 pipeline = pk.load(open(pipe, 'rb'))
 
 # hello_flag = 0
