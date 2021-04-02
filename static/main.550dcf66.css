@@ -5703,11 +5703,12 @@
             position: relative;
             z-index: 1;
             width: 300px;
+            min-height: 14em;
         }
         
         @media (min-width:992px) {
             .card {
-                padding: 5rem
+                padding: 4rem 2rem;
             }
         }
         
@@ -5897,7 +5898,7 @@
         }
         
         .card-deck {
-            max-width: 1100px;
+            /* max-width: 1100px; */
             margin: 0 auto;
             display: -webkit-flex;
             display: flex;
@@ -5971,5 +5972,5 @@
         .card:hover {
             /*box-shadow: 0 5px 22px 0 rgba(0,0,0,.25);*/
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-            margin-bottom: 54px;
+            margin-bottom: 10px;
         }

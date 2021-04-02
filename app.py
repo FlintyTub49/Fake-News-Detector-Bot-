@@ -70,25 +70,35 @@ def output():
         query = ' '.join(r.get_ranked_phrases()[:3])
 
         hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
-        'Accept-Encoding': 'none',
-        'Accept-Language': 'en-US,en;q=0.8',
-        'Connection': 'keep-alive'}
+               'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+               'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
+               'Accept-Encoding': 'none',
+               'Accept-Language': 'en-US,en;q=0.8',
+               'Connection': 'keep-alive'}
 
         links, headings = [], []
+        articles = {}
+
         if query:
             for i in search(query, country='india', lang='en', num=3, start=0, stop=3):
                 links.append(i)
 
             for i in links:
-                url = urllib.Request(i, headers = hdr)
+                url = urllib.Request(i, headers=hdr)
                 soup = BeautifulSoup(urllib.urlopen(url))
+
                 headings.append(soup.title.get_text())
+                articles[i] = soup.title.get_text()
+
         else:
             return render_template("index.html", pred=(output), scroll="scrollable")
-            
-        return render_template("index.html", pred=(output), scroll="scrollable", articles=links)
+
+        if links:
+            print(links)
+        print(headings)
+        print(articles)
+
+        return render_template("index.html", pred=(output), scroll="scrollable", articles=articles)
 
     return render_template("index.html", pred=(output), scroll="scrollable")
 
