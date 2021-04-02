@@ -1,7 +1,8 @@
 import os
 from flask import Flask, request, render_template
+import pickle as pk
 
-from tensorflow.keras.models import load_model
+# from tensorflow.keras.models import load_model
 from preprocessing import preprocess_text
 
 from twilio.twiml.messaging_response import MessagingResponse
@@ -18,9 +19,9 @@ import urllib.request as urllib
 # auth_token = os.environ['TWILIO_AUTH_TOKEN']
 # client = Client(account_sid, auth_token)
 
-codePath = os.path.dirname(os.path.abspath('preprocessing.py'))
-tokens = os.path.join(codePath, 'Models/codalab_df_listone.h5')
-model = load_model(tokens)
+codePath = os.path.dirname(os.path.abspath('app.py'))
+pipe = os.path.join(codePath, 'Models/codalab_df_listone.h5')
+pipeline = pk.load(open(pipe, 'rb'))
 
 # hello_flag = 0
 
@@ -94,7 +95,7 @@ def bot():
 
     else:
         text = preprocess_text(incoming_msg)
-        pred = model.predict(text)[0][0]
+        pred = pipeline.predict([text])
 
         output = ''
 
