@@ -84,7 +84,7 @@ def respond():
         else:
             image = os.path.join(codePath, 'wordClouds/wcReal.jpg')
         
-        bot.send_photo(chat_id = chat_id, photo = image, reply_to_message_id = msg_id)
+        bot.send_photo(chat_id = chat_id, photo = open(image, 'rb'), reply_to_message_id = msg_id)
         return 'ok'
 
 
