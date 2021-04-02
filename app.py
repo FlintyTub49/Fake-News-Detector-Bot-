@@ -48,10 +48,11 @@ def respond():
     print("got text message :", text)
 
     hello_list = ['hello', 'hey', 'start', 'hi']
-    
-    vis = ['visualize', 'image', 'wordcloud', 'wordcount']
-    first = text.lower().split(' ')[0]
-    second = text.lower().split(' ')[1]
+
+    if len(text.strip().split(' ')) > 1:
+        vis = ['visualize', 'image', 'wordcloud', 'wordcount']
+        first = text.lower().split(' ')[0]
+        second = text.lower().split(' ')[1]
 
     global hello_flag
     put_links = False
@@ -75,7 +76,7 @@ def respond():
     # ----------------------------------------
     # To Send Images
     # ----------------------------------------
-    elif any(img == first.lower() for img in vis):
+    elif any(img == first.lower() for img in vis) and len(text.strip().split(' ')) > 1:
         image = ''
         if second == 'fake':
             image = os.path.join(codePath, 'wordClouds/wcFake.jpg')
