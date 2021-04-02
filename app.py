@@ -48,6 +48,11 @@ def respond():
     print("got text message :", text)
 
     hello_list = ['hello', 'hey', 'start', 'hi']
+    
+    vis = ['visualize', 'image', 'wordcloud', 'wordcount']
+    first = text.lower().split(' ')[0]
+    second = text.lower().split(' ')[1]
+
     global hello_flag
     put_links = False
     response = 'No Response'
@@ -66,6 +71,21 @@ def respond():
         It's that simple 😃
         Try it for yourself, simply send me a News About COVID19 and I'll try to tell if it is Fake Or Real. ✌🏻✅
         """
+
+    # ----------------------------------------
+    # To Send Images
+    # ----------------------------------------
+    elif any(img == first.lower() for img in vis):
+        image = ''
+        if second == 'fake':
+            image = os.path.join(codePath, 'wordClouds/wcFake.jpg')
+
+        else:
+            image = os.path.join(codePath, 'wordClouds/wcReal.jpg')
+        
+        bot.send_photo(chat_id = chat_id, photo = image, reply_to_message_id = msg_id)
+        return 'ok'
+
 
     else:
         # ----------------------------------------
