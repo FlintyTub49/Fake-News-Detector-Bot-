@@ -54,10 +54,10 @@ def respond():
 
     hello_list = ['hello', 'hey', 'start', 'hi']
 
-    vis = ['visualize', 'image', 'wordcloud', 'wordcount']
-    if len(text.strip().split(' ')) > 1:
-        first = text.lower().split(' ')[0]
-        second = text.lower().split(' ')[1]
+    # vis = ['visualize', 'image', 'wordcloud', 'wordcount']
+    # if len(text.strip().split(' ')) > 1:
+    #     first = text.lower().split(' ')[0]
+    #     second = text.lower().split(' ')[1]
 
     global hello_flag
     put_links = False
@@ -81,16 +81,16 @@ def respond():
     # ----------------------------------------
     # To Send Images
     # ----------------------------------------
-    elif any(img == first.lower() for img in vis) and len(text.strip().split(' ')) > 1:
-        image = ''
-        if second == 'fake':
-            image = os.path.join(codePath, 'wordClouds/wcFake.jpg')
+    # elif any(img == first.lower() for img in vis) and len(text.strip().split(' ')) > 1:
+    #     image = ''
+    #     if second == 'fake':
+    #         image = os.path.join(codePath, 'wordClouds/wcFake.jpg')
 
-        else:
-            image = os.path.join(codePath, 'wordClouds/wcReal.jpg')
+    #     else:
+    #         image = os.path.join(codePath, 'wordClouds/wcReal.jpg')
         
-        bot.send_photo(chat_id = chat_id, photo = open(image, 'rb'), reply_to_message_id = msg_id)
-        return 'ok'
+    #     bot.send_photo(chat_id = chat_id, photo = open(image, 'rb'), reply_to_message_id = msg_id)
+    #     return 'ok'
 
 
     else:
