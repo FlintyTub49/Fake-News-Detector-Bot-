@@ -49,13 +49,13 @@ def respond():
     except AttributeError as error:
         bot.sendMessage(chat_id=chat_id, text='No Response Received', reply_to_message_id=msg_id)
         return 'ok'
-        
+
     print("got text message :", text)
 
     hello_list = ['hello', 'hey', 'start', 'hi']
 
+    vis = ['visualize', 'image', 'wordcloud', 'wordcount']
     if len(text.strip().split(' ')) > 1:
-        vis = ['visualize', 'image', 'wordcloud', 'wordcount']
         first = text.lower().split(' ')[0]
         second = text.lower().split(' ')[1]
 
