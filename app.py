@@ -44,7 +44,12 @@ def respond():
     msg_id = update.message.message_id
 
     # Telegram understands UTF-8, so encode text for unicode compatibility
-    text = update.message.text.encode('utf-8').decode()
+    try:
+        text = update.message.text.encode('utf-8').decode()
+    except AttributeError as error:
+        bot.sendMessage(chat_id=chat_id, text='No Response Received', reply_to_message_id=msg_id)
+        return 'ok'
+        
     print("got text message :", text)
 
     hello_list = ['hello', 'hey', 'start', 'hi']
