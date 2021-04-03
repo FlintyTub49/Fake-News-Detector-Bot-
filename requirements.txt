@@ -15,3 +15,4 @@ rake-nltk>=1.0.4
 google==3.0.0
 rake-nltk>=1.0.4
 google==3.0.0
+python-telegram-bot>=13.4.1
